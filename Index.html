@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JT Soluciones · Tienda 3D</title>
+<style>
+:root{--bg:#fafaf8;--card:#fff;--ink:#1d1d1f;--mute:#6b6b68;--line:#e6e4df;--acc:#e8501e;--on:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--card:#1c1c1c;--ink:#f2f2f0;--mute:#9a9a96;--line:#2c2c2a;--acc:#f26a38;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141414;--card:#1c1c1c;--ink:#f2f2f0;--mute:#9a9a96;--line:#2c2c2a;--acc:#f26a38;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);max-width:1100px;margin:auto}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+.logo i{display:grid;place-items:center;width:38px;height:38px;border:3px solid var(--ink);border-radius:10px;color:var(--acc);font-style:normal;font-size:15px}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 16px}
+.btn.p{background:var(--acc);border-color:var(--acc);color:var(--on);font-weight:600}
+main{max-width:1100px;margin:auto;padding:28px 20px 60px}
+h1{font-size:clamp(26px,5vw,38px);margin:0 0 6px;letter-spacing:-.5px}
+.sub{color:var(--mute);margin:0 0 24px}
+.filters{display:grid;gap:14px;margin-bottom:26px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 14px;font-size:14px}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.lab{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.8px;min-width:70px}
+select{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:7px 10px}
+.sw{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);padding:0}
+.sw.on{outline:2px solid var(--acc);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:left;padding:0;display:flex;flex-direction:column}
+.tile{aspect-ratio:4/3;display:grid;place-items:center;position:relative}
+.tag{position:absolute;top:10px;left:10px;font-size:12px;padding:3px 10px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
+.tag.now{background:var(--acc);color:var(--on);border-color:var(--acc)}
+.info{padding:14px 16px 16px;display:grid;gap:4px}
+.info b{font-size:16px}.mut{color:var(--mute);font-size:13px}
+.price{font-weight:700;margin-top:6px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:20;justify-content:center;align-items:flex-end}
+.ov.show{display:flex}
+.sheet{background:var(--bg);width:100%;max-width:520px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:22px 22px calc(22px + env(safe-area-inset-bottom,0px))}
+@media(min-width:700px){.ov{align-items:center}.sheet{border-radius:20px}}
+.sheet h2{margin:0 0 4px;font-size:22px}
+.fld{margin:16px 0}.fld>label,.fld>.lab{display:block;margin-bottom:6px}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px;margin-top:12px}
+.dl span:nth-child(odd){color:var(--mute)}
+.slot{display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap}
+.slot .lab{min-width:84px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px}
+.qty button{border:0;background:none;width:36px;height:36px;font-size:18px}
+.qty span{min-width:28px;text-align:center}
+input[type=text],input[type=email],input[type=tel]{width:100%;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;margin-bottom:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.line{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.x{border:0;background:none;color:var(--mute);text-decoration:underline;font-size:13px}
+.ok{text-align:center;padding:10px 0}.ok h2{color:var(--acc)}
+.note{font-size:12px;color:var(--mute);margin-top:12px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><i>JT</i><span>SOLUCIONES</span></div>
+  <div class="row"><button class="btn" id="th" aria-label="Cambiar tema">◐</button><button class="btn p" id="cb">Pedido (0)</button></div>
+</header>
+<main>
+  <h1>Impresión 3D a tu medida</h1>
+  <p class="sub">Elegí un producto, personalizá color y filamento, y lo fabricamos para vos.</p>
+  <div class="filters">
+    <div class="row"><span class="lab">Categoría</span><span id="fc" class="row"></span></div>
+    <div class="row"><span class="lab">Filamento</span><select id="ff"></select>
+      <label class="row" style="margin-left:10px"><input type="checkbox" id="fi"> Solo entrega inmediata</label></div>
+    <div class="row"><span class="lab">Color</span><span id="fk" class="row"></span></div>
+  </div>
+  <div class="grid" id="g"></div>
+</main>
+
+<div class="ov" id="o1"><div class="sheet" id="s1"></div></div>
+<div class="ov" id="o2"><div class="sheet" id="s2"></div></div>
+
+<script>
+const COL={Negro:'#1f1f1f',Blanco:'#f1f1ee',Naranja:'#e8501e',Azul:'#2f5d9e',Verde:'#3f8f5a',Gris:'#8a8d91',Rojo:'#c0392b',Amarillo:'#f2c230'};
+const FIL={PLA:'Fácil de imprimir, acabado liso. Ideal para interior.',PETG:'Resistente y apto para humedad y exterior.',ASA:'Resistente al sol y a la intemperie.',TPU:'Flexible y elástico, absorbe golpes.'};
+const CATS=['Todos','Hogar','Deportes','Tecnología','Souvenirs'];
+const P=[
+ {c:'JT-HOG-001',n:'Organizador de escritorio',cat:'Hogar',m:'120 × 80 × 45 mm',f:['PLA','PETG'],b:['Negro','Naranja'],s:true,pr:6500},
+ {c:'JT-HOG-002',n:'Maceta geométrica',cat:'Hogar',m:'100 × 100 × 95 mm',f:['PLA','PETG'],b:['Blanco'],s:true,pr:4800},
+ {c:'JT-DEP-001',n:'Soporte para botella de bici',cat:'Deportes',m:'90 × 60 × 55 mm',f:['PETG','ASA'],b:['Negro'],s:false,pr:3900},
+ {c:'JT-DEP-002',n:'Porta medallas',cat:'Deportes',m:'300 × 40 × 120 mm',f:['PLA'],b:['Gris','Naranja','Negro'],s:false,pr:9200},
+ {c:'JT-TEC-001',n:'Soporte para celular',cat:'Tecnología',m:'85 × 70 × 100 mm',f:['PLA','PETG'],b:['Negro','Azul'],s:true,pr:4200},
+ {c:'JT-TEC-002',n:'Funda protectora para auriculares',cat:'Tecnología',m:'65 × 50 × 28 mm',f:['TPU'],b:['Negro'],s:false,pr:3500},
+ {c:'JT-SOU-001',n:'Llavero personalizado',cat:'Souvenirs',m:'50 × 30 × 4 mm',f:['PLA'],b:['Azul','Blanco'],s:true,pr:1500},
+ {c:'JT-SOU-002',n:'Imán de heladera',cat:'Souvenirs',m:'60 × 45 × 6 mm',f:['PLA','PETG'],b:['Verde','Blanco','Negro'],s:true,pr:1200}
+];
+const $=id=>document.getElementById(id), money=n=>'$ '+n.toLocaleString('es-AR');
+let F={cat:'Todos',fil:'',col:'',now:false}, cart=[], cur=null, sel=null, qty=1, fil='', ord=1042;
+
+function chips(){
+  $('fc').innerHTML=CATS.map(c=>`<button class="chip ${F.cat==c?'on':''}" data-c="${c}">${c}</button>`).join('');
+  $('fk').innerHTML=Object.keys(COL).map(k=>`<button class="sw ${F.col==k?'on':''}" data-k="${k}" title="${k}" aria-label="${k}" style="background:${COL[k]}"></button>`).join('');
+}
+function list(){
+  const r=P.filter(p=>(F.cat=='Todos'||p.cat==F.cat)&&(!F.fil||p.f.includes(F.fil))&&(!F.now||p.s)&&(!F.col||p.b.includes(F.col)));
+  $('g').innerHTML=r.length?r.map(p=>{const h=COL[p.b[0]];return `<button class="card" data-p="${p.c}">
+   <div class="tile" style="background:color-mix(in srgb,${h} 16%,var(--card))">
+    <span class="tag ${p.s?'now':''}">${p.s?'Entrega inmediata':'Bajo pedido'}</span>
+    <svg width="84" height="84" viewBox="0 0 84 84"><path d="M42 8l30 17v34L42 76 12 59V25z" fill="${h}"/><path d="M42 42l30-17M42 42L12 25M42 42v34" stroke="var(--card)" stroke-width="2" fill="none" opacity=".55"/></svg></div>
+   <div class="info"><span class="mut">${p.c} · ${p.cat}</span><b>${p.n}</b><span class="mut">${p.m} · ${p.f.join(' / ')}</span><span class="price">${money(p.pr)}</span></div></button>`}).join(''):'<p class="mut">No hay productos con esos filtros.</p>';
+}
+function sw(i,k){return `<button class="sw ${sel[i]==k?'on':''}" data-s="${i}|${k}" title="${k}" aria-label="${k}" style="background:${COL[k]}"></button>`}
+function detail(){
+  const p=cur,L=['Primario','Secundario','Terciario'];
+  $('s1').innerHTML=`<div class="row" style="justify-content:space-between"><span class="mut">${p.c}</span><button class="x" data-close="o1">Cerrar</button></div>
+  <h2>${p.n}</h2><span class="tag ${p.s?'now':''}" style="position:static;display:inline-block">${p.s?'Entrega inmediata':'Bajo pedido · 3 a 5 días'}</span>
+  <div class="dl"><span>Medidas</span><span>${p.m}</span><span>Color base</span><span>${p.b.join(' + ')}</span><span>Filamento</span><span>${FIL[fil]}</span></div>
+  <div class="fld"><span class="lab">Filamento</span><div class="row">${p.f.map(x=>`<button class="chip ${fil==x?'on':''}" data-f="${x}">${x}</button>`).join('')}</div></div>
+  <div class="fld"><span class="lab">Colores</span>${sel.map((c,i)=>`<div class="slot"><span class="lab">${L[i]}</span><span class="row">${Object.keys(COL).map(k=>sw(i,k)).join('')}</span></div>`).join('')}
+   <div class="mut">Base: ${p.b.join(' + ')}. Si no elegís, se usa el color base.</div></div>
+  <div class="fld row" style="justify-content:space-between"><div class="qty"><button data-q="-1">−</button><span>${qty}</span><button data-q="1">+</button></div><b>${money(p.pr*qty)}</b></div>
+  <button class="btn p" style="width:100%;padding:12px" data-add>Agregar al pedido</button>`;
+}
+function cartView(){
+  $('cb').textContent=`Pedido (${cart.reduce((a,i)=>a+i.q,0)})`;
+  const t=cart.reduce((a,i)=>a+i.p.pr*i.q,0);
+  $('s2').innerHTML=`<div class="row" style="justify-content:space-between"><h2>Tu pedido</h2><button class="x" data-close="o2">Cerrar</button></div>`+
+  (cart.length?cart.map((i,n)=>`<div class="line"><div><b>${i.p.n}</b> × ${i.q}<div class="mut">${i.p.c} · ${i.fil} · ${i.col.join(' / ')} · ${i.p.m}</div><button class="x" data-rm="${n}">Quitar</button></div><b>${money(i.p.pr*i.q)}</b></div>`).join('')+
+  `<div class="line"><span>Total</span><b>${money(t)}</b></div>
+  <form id="fm"><div class="fld"><span class="lab">Tus datos</span>
+  <div class="two"><input type="text" name="n" placeholder="Nombre" required><input type="text" name="a" placeholder="Apellido" required></div>
+  <input type="email" placeholder="Mail" required><input type="text" placeholder="Dirección de entrega" required><input type="tel" placeholder="Celular" required></div>
+  <button class="btn p" style="width:100%;padding:12px">Confirmar pedido</button></form>
+  <p class="note">Demo: los datos se guardarán en Firebase en la versión final.</p>`:'<p class="mut">Todavía no agregaste productos.</p>');
+}
+function done(){
+  const no='#JT-'+String(++ord).padStart(5,'0');
+  $('s2').innerHTML=`<div class="ok"><h2>¡Pedido recibido!</h2><p>Tu número de pedido es</p><h1>${no}</h1>
+  <p class="mut">Referencias: ${cart.map(i=>i.p.c).join(', ')}</p><p class="mut">Te contactaremos por mail para coordinar pago y entrega.</p>
+  <button class="btn p" data-close="o2">Volver a la tienda</button></div>`;
+  cart=[];$('cb').textContent='Pedido (0)';
+}
+$('ff').innerHTML='<option value="">Todos los filamentos</option>'+Object.keys(FIL).map(f=>`<option>${f}</option>`).join('');
+$('ff').onchange=e=>{F.fil=e.target.value;list()};
+$('fi').onchange=e=>{F.now=e.target.checked;list()};
+$('th').onclick=()=>{const d=document.documentElement,dk=getComputedStyle(d).colorScheme=='dark';d.dataset.theme=dk?'light':'dark'};
+$('cb').onclick=()=>{cartView();$('o2').classList.add('show')};
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button,.ov');if(!t)return;const d=t.dataset;
+  if(t.classList.contains('ov')&&e.target===t){t.classList.remove('show');return}
+  if(d.c){F.cat=d.c;chips();list()}
+  else if(d.k){F.col=F.col==d.k?'':d.k;chips();list()}
+  else if(d.p){cur=P.find(p=>p.c==d.p);fil=cur.f[0];qty=1;sel=cur.b.slice();detail();$('o1').classList.add('show')}
+  else if(d.f){fil=d.f;detail()}
+  else if(d.s){const[i,k]=d.s.split('|');sel[i]=k;detail()}
+  else if(d.q){qty=Math.max(1,Math.min(50,qty+ +d.q));detail()}
+  else if(d.add!==undefined){cart.push({p:cur,q:qty,fil,col:sel.slice()});$('o1').classList.remove('show');cartView()}
+  else if(d.rm){cart.splice(+d.rm,1);cartView()}
+  else if(d.close){$(d.close).classList.remove('show')}
+});
+document.addEventListener('submit',e=>{e.preventDefault();done()});
+chips();list();
+</script>
+</body>
+</html>
